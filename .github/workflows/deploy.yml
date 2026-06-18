@@ -22,11 +22,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Build with Astro
         uses: withastro/action@v3
-        # Si publicas como project page (usuario.github.io/portfolio),
-        # descomenta y ajusta:
-        # with:
-        #   path: .
-        #   node-version: 24
+        with:
+          path: .
+          node-version: 24
 
   deploy:
     needs: build
