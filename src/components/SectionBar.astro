@@ -1,0 +1,21 @@
+---
+// SectionBar — derivado de C-DES (banda negra full-width con label blanco).
+interface Props { label: string; }
+const { label } = Astro.props;
+---
+<div class="section-bar"><span class="section-bar__label">{label}</span></div>
+
+<style>
+  .section-bar {
+    background: var(--color-ink);
+    color: var(--color-on-dark);
+    padding: var(--space-2) var(--space-4);
+  }
+  .section-bar__label {
+    font-family: var(--font-ui);
+    font-size: var(--fs-nav);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
+  }
+</style>

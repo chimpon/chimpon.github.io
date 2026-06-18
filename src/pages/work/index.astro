@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionBar from '../../components/SectionBar.astro';
+import Card from '../../components/Card.astro';
+import Tag from '../../components/Tag.astro';
+
+const cases = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+
+// Proyectos menores DUMMY (bloque "Other projects")
+const others = [
+  { title: 'Gamified learning board for kids — classical Greece theme', kind: 'Side project', year: '2025' },
+  { title: 'A/B hypothesis template and prioritisation framework', kind: 'Process', year: '2024' },
+  { title: 'Competitive PLP benchmark across search-intent levels', kind: 'Research', year: '2024' },
+];
+---
+<BaseLayout
+  title="Work"
+  description="Selected Product Design case studies: B2C conversion, B2B architecture and 0-to-1 systems."
+>
+  <div class="container"><SectionBar label="Work" /></div>
+
+  <section class="container intro measure">
+    <p class="intro__lede">
+      A short, deliberately ranged selection: a B2C conversion problem at scale, a B2B
+      information-architecture rebuild, and a 0-to-1 system. Each one leads with the decision and
+      the evidence behind it.
+    </p>
+  </section>
+
+  <section class="container">
+    <div class="grid">
+      {cases.map((c) => (
+        <Card
+          href={`/work/${c.id}/`}
+          category={c.data.category}
+          title={c.data.title}
+          summary={c.data.summary}
+          coverLabel="COVER 16:9"
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- Other projects -->
+  <section class="container">
+    <h2 class="section-rule label others__title">Other projects</h2>
+    <ul class="others" role="list">
+      {others.map((o) => (
+        <li class="others__row">
+          <span class="others__name">{o.title}</span>
+          <span class="others__meta"><Tag>{o.kind}</Tag> · <span class="meta">{o.year}</span></span>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro { padding-top: var(--space-6); }
+  .intro__lede { font-family: var(--font-serif); font-size: var(--fs-lead); line-height: var(--lh-snug); }
+  .grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7);
+    margin-top: var(--space-7);
+  }
+  .others__title { display: block; }
+  .others { margin: var(--space-4) 0 0; padding: 0; list-style: none; }
+  .others__row {
+    display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4);
+    border-bottom: var(--rule-hair); padding-block: var(--space-4);
+  }
+  .others__name { font-family: var(--font-serif); font-size: var(--fs-h2); }
+  .others__meta { white-space: nowrap; color: var(--color-muted); }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+    .others__row { flex-direction: column; gap: var(--space-1); }
+  }
+</style>

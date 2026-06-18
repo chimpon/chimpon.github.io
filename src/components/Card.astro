@@ -1,0 +1,48 @@
+---
+// Card — derivado de C-DES (card de artículo: cover, categoría, titular serif, meta).
+// Usada también como card de caso de estudio (composición con primitivas, sin lenguaje nuevo).
+import Placeholder from './Placeholder.astro';
+import Tag from './Tag.astro';
+import Meta from './Meta.astro';
+interface Props {
+  href: string;
+  category: string;
+  title: string;
+  summary?: string;
+  metaText?: string;
+  coverLabel?: string;
+  ratio?: string;
+  size?: 'large' | 'default';
+}
+const {
+  href, category, title, summary,
+  metaText, coverLabel = 'COVER 16:9', ratio = '16/9', size = 'default',
+} = Astro.props;
+---
+<article class:list={['card', `card--${size}`]}>
+  <a class="card__cover" href={href} tabindex="-1" aria-hidden="true">
+    <Placeholder ratio={ratio} label={coverLabel} />
+  </a>
+  <Tag>{category}</Tag>
+  <h3 class="card__title">
+    <a href={href}>{title}</a>
+  </h3>
+  {summary && <p class="card__summary">{summary}</p>}
+  {metaText && <Meta>{metaText}</Meta>}
+</article>
+
+<style>
+  .card { display: flex; flex-direction: column; gap: var(--space-2); }
+  .card__cover { display: block; margin-bottom: var(--space-1); }
+  .card__title {
+    font-family: var(--font-serif);
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h2);
+    line-height: var(--lh-snug);
+  }
+  .card__title a { text-decoration: none; }
+  .card__title a:hover { text-decoration: underline; text-underline-offset: 2px; } /* [INFERIDO] */
+  .card__summary { color: var(--color-muted); font-size: var(--fs-small); }
+  .card--large .card__title { font-size: var(--fs-h1); }
+  .card--large .card__summary { font-size: var(--fs-lead); color: var(--color-ink); }
+</style>

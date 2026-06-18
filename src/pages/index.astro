@@ -1,0 +1,69 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionBar from '../components/SectionBar.astro';
+import Card from '../components/Card.astro';
+import CtaBlock from '../components/CtaBlock.astro';
+import { site } from '../data/site';
+
+const cases = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+const [featured, ...rest] = cases;
+---
+<BaseLayout
+  title="Home"
+  description={`${site.role} working on B2C marketplaces and complex internal tools. Selected case studies and process.`}
+>
+  <!-- Statement / hero (tesis discreta, sin romper el estilo editorial) -->
+  <section class="container intro measure">
+    <p class="intro__lede">
+      {site.role} working on <strong>B2C marketplaces</strong>, dense <strong>B2B tools</strong>
+      and <strong>design systems</strong>. I care about the moments where a decision turns into a
+      number — conversion, completion, time-to-task.
+    </p>
+  </section>
+
+  <!-- Caso destacado -->
+  <section class="container featured">
+    <Card
+      size="large"
+      href={`/work/${featured.id}/`}
+      category={featured.data.category}
+      title={featured.data.title}
+      summary={featured.data.summary}
+      coverLabel="FEATURED COVER 16:9"
+    />
+  </section>
+
+  <!-- Selected work -->
+  <section class="container">
+    <SectionBar label="Selected work" />
+    <div class="grid">
+      {rest.map((c) => (
+        <Card
+          href={`/work/${c.id}/`}
+          category={c.data.category}
+          title={c.data.title}
+          summary={c.data.summary}
+          coverLabel="COVER 16:9"
+        />
+      ))}
+    </div>
+    <p class="seeall"><a href="/work/" class="label">All work →</a></p>
+  </section>
+
+  <CtaBlock />
+</BaseLayout>
+
+<style>
+  .intro { padding-top: var(--space-7); }
+  .intro__lede { font-family: var(--font-serif); font-size: var(--fs-h2); line-height: var(--lh-snug); }
+  .intro__lede strong { font-weight: var(--fw-regular); text-decoration: underline; text-underline-offset: 3px; }
+  .featured { padding-top: var(--space-8); }
+  .grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-7);
+    margin-top: var(--space-6);
+  }
+  .seeall { margin-top: var(--space-6); }
+  .seeall a { text-decoration: none; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+</style>

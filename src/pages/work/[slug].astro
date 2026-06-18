@@ -1,0 +1,41 @@
+---
+import { getCollection, render } from 'astro:content';
+import CaseLayout from '../../layouts/CaseLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('work');
+  const sorted = entries.sort((a, b) => a.data.order - b.data.order);
+  return sorted.map((entry) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      related: sorted
+        .filter((e) => e.id !== entry.id)
+        .map((e) => ({
+          href: `/work/${e.id}/`,
+          category: e.data.category,
+          title: e.data.title,
+          summary: e.data.summary,
+        })),
+    },
+  }));
+}
+
+const { entry, related } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<CaseLayout
+  title={d.title}
+  description={d.summary}
+  category={d.category}
+  company={d.company}
+  role={d.role}
+  period={d.period}
+  cover={d.cover}
+  coverRatio={d.coverRatio}
+  confidential={d.confidential}
+  related={related}
+>
+  <Content />
+</CaseLayout>

@@ -1,0 +1,102 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Placeholder from '../components/Placeholder.astro';
+import Tag from '../components/Tag.astro';
+import Card from '../components/Card.astro';
+
+interface RelatedItem {
+  href: string; category: string; title: string; summary: string;
+}
+interface Props {
+  title: string;
+  description: string;
+  category: string;
+  company: string;
+  role: string;
+  period: string;
+  cover: string;
+  coverRatio?: string;
+  confidential?: boolean;
+  related?: RelatedItem[];
+}
+const {
+  title, description, category, company, role, period,
+  coverRatio = '16/9', confidential = false, related = [],
+} = Astro.props;
+---
+<BaseLayout title={title} description={description} type="article">
+  <article class="case">
+    <div class="container">
+      <p class="case__crumb label"><a href="/">Home</a> / <a href="/work/">Work</a></p>
+    </div>
+
+    <header class="container measure case__head">
+      <p class="eyebrow case__eyebrow">{category}{confidential ? ' · Confidential (lite)' : ''}</p>
+      <h1 class="case__title">{title}</h1>
+      <p class="case__standfirst">{description}</p>
+      <dl class="case__facts">
+        <div><dt class="label">Company</dt><dd>{company}</dd></div>
+        <div><dt class="label">Role</dt><dd>{role}</dd></div>
+        <div><dt class="label">Period</dt><dd>{period}</dd></div>
+      </dl>
+    </header>
+
+    <figure class="container case__cover">
+      <Placeholder ratio={coverRatio} label="CASE COVER 16:9" />
+      <figcaption class="meta">Placeholder — replace with a real cover</figcaption>
+    </figure>
+
+    <div class="container measure prose case__body">
+      <slot />
+    </div>
+
+    {related.length > 0 && (
+      <section class="container case__related">
+        <h2 class="section-rule case__related-title label">More work</h2>
+        <div class="case__related-grid">
+          {related.map((r) => (
+            <Card href={r.href} category={r.category} title={r.title} summary={r.summary} coverLabel="COVER 16:9" />
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  .case__crumb { display: block; padding-top: var(--space-5); color: var(--color-muted); }
+  .case__crumb a { text-decoration: none; }
+  .case__head { padding-top: var(--space-6); }
+  .case__eyebrow { display: block; margin-bottom: var(--space-3); }
+  .case__title { font-size: var(--fs-h1); line-height: var(--lh-tight); margin-bottom: var(--space-4); }
+  .case__standfirst { font-size: var(--fs-lead); margin-bottom: var(--space-5); }
+  .case__facts {
+    display: flex; flex-wrap: wrap; gap: var(--space-5);
+    border-top: var(--rule-hair); border-bottom: var(--rule-hair);
+    padding-block: var(--space-4); margin: 0;
+  }
+  .case__facts dt { display: block; color: var(--color-muted); margin-bottom: var(--space-1); }
+  .case__facts dd { margin: 0; font-family: var(--font-ui); font-size: var(--fs-small); }
+  .case__cover { padding-top: var(--space-7); }
+  .case__cover figcaption { margin-top: var(--space-2); }
+
+  /* Cuerpo de lectura — patrón de artículo (serif, interlineado generoso) */
+  .case__body { padding-top: var(--space-7); }
+  .prose :global(h2) {
+    font-family: var(--font-serif); font-size: var(--fs-h2); font-weight: var(--fw-regular);
+    margin-top: var(--space-7); margin-bottom: var(--space-3);
+  }
+  .prose :global(p) { margin-bottom: var(--space-4); }
+  .prose :global(strong) { font-weight: var(--fw-bold); }
+  .prose :global(em) { font-style: italic; }
+
+  .case__related { padding-top: var(--space-4); }
+  .case__related-title { display: block; }
+  .case__related-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6);
+    margin-top: var(--space-5);
+  }
+  @media (max-width: 720px) {
+    .case__related-grid { grid-template-columns: 1fr; }
+  }
+</style>

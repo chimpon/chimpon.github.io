@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionBar from '../components/SectionBar.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { site } from '../data/site';
+
+// DUMMY
+const tools = ['Figma', 'Astro', 'GA4', 'Clarity', 'Optimizely', 'n8n'];
+const experience = [
+  { role: 'Product Designer', org: 'Dummy Marketplace Co.', period: '2024–present' },
+  { role: 'Product Designer', org: 'Dummy Studio', period: '2021–2024' },
+  { role: 'UX/UI Designer', org: 'Dummy Agency', period: '2018–2021' },
+];
+---
+<BaseLayout
+  title="About"
+  description={`${site.role} based in ${site.location}. Data-informed design for marketplaces, internal tools and systems.`}
+>
+  <div class="container"><SectionBar label="About" /></div>
+
+  <section class="container about">
+    <div class="about__media">
+      <Placeholder ratio="1/1" label="AVATAR 1:1" />
+    </div>
+    <div class="about__body measure prose">
+      <p class="about__lede">
+        I'm a {site.role.toLowerCase()} based in {site.location}. <!-- DUMMY -->
+        I work where product decisions meet measurable behaviour — search and listing flows,
+        checkout, and the internal tools that keep a marketplace running.
+      </p>
+      <p>
+        I tend to be the only designer in the room, which has made me comfortable owning the whole
+        arc: framing the problem with evidence, drawing the tradeoffs out loud, shipping, and then
+        reading the numbers to see whether the decision held. I read a lot of analytics and I'm
+        sceptical of design that can't point to a mechanism.
+      </p>
+      <p>
+        Outside work: film photography, board games, Ashtanga yoga, and a long-running interest in
+        classical and Eastern philosophy that mostly shows up as a bias toward restraint.
+        <!-- DUMMY: reemplazar por bio real -->
+      </p>
+
+      <h2 class="label about__sub">Tools</h2>
+      <ul class="chips" role="list">{tools.map((t) => <li class="chip">{t}</li>)}</ul>
+
+      <h2 class="label about__sub">Experience</h2>
+      <ul class="exp" role="list">
+        {experience.map((e) => (
+          <li class="exp__row">
+            <span class="exp__role">{e.role} — {e.org}</span>
+            <span class="meta">{e.period}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-8); padding-top: var(--space-7); align-items: start; }
+  .about__lede { font-family: var(--font-serif); font-size: var(--fs-lead); }
+  .about__sub { display: block; margin-top: var(--space-7); margin-bottom: var(--space-3); }
+  .chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+  .chip {
+    font-family: var(--font-ui); font-size: var(--fs-label); letter-spacing: var(--ls-label);
+    text-transform: uppercase; border: var(--border-button); padding: var(--space-1) var(--space-3);
+  }
+  .exp { margin: 0; padding: 0; list-style: none; }
+  .exp__row { display: flex; justify-content: space-between; gap: var(--space-4); border-bottom: var(--rule-hair); padding-block: var(--space-3); }
+  .exp__role { font-family: var(--font-ui); font-size: var(--fs-small); }
+  @media (max-width: 720px) {
+    .about { grid-template-columns: 1fr; gap: var(--space-6); }
+    .about__media { max-width: 200px; }
+  }
+</style>

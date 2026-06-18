@@ -1,0 +1,96 @@
+/* =====================================================================
+   global.css — aplica los tokens (tokens.css) a la base del documento.
+   No introduce valores nuevos: todo referencia variables de tokens.css.
+   Los estados de interacción y la accesibilidad están [INFERIDO]
+   (ver DESIGN-SYSTEM.md §3).
+   ===================================================================== */
+@import './tokens.css';
+
+/* ---- Reset mínimo ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd, ul, ol { margin: 0; }
+ul[role='list'], ol[role='list'] { list-style: none; padding: 0; }
+img, picture, svg { max-width: 100%; display: block; }
+button, input, textarea { font: inherit; color: inherit; }
+a { color: inherit; }
+
+/* ---- Base ---- */
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-regular);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+}
+
+/* ---- Tipografía utilitaria (sans, uppercase, tracked) ---- */
+.ui { font-family: var(--font-ui); }
+.eyebrow,
+.label {
+  font-family: var(--font-ui);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+.meta {
+  font-family: var(--font-ui);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--color-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* ---- Layout ---- */
+.container {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.measure { max-width: var(--measure); }
+
+/* Regla negra pesada sobre títulos de sección (patrón Monocle) */
+.section-rule {
+  border-top: var(--rule-heavy);
+  padding-top: var(--space-3);
+  margin-top: var(--space-8);
+}
+
+/* ---- Enlaces de contenido (cuerpo) ---- */
+.prose a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---- Estados [INFERIDO] ---- */
+a, button { transition: color var(--transition-fast), background-color var(--transition-fast), opacity var(--transition-fast); }
+
+:where(a):hover { text-decoration: underline; text-underline-offset: 2px; } /* [INFERIDO] */
+
+:focus-visible { outline: var(--focus-ring); outline-offset: 2px; } /* [INFERIDO] a11y */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* Utilidad de accesibilidad: salto al contenido */
+.skip-link {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--color-ink); color: var(--color-on-dark);
+  padding: var(--space-2) var(--space-4); z-index: 100;
+}
+.skip-link:focus { left: var(--space-3); top: var(--space-3); }

@@ -1,0 +1,95 @@
+---
+// Footer — replica el patrón del footer de Monocle (C-DES/C-SHOP/C-RAD):
+// fondo negro, wordmark + tagline, botón amarillo + outline, columnas de enlaces.
+// Contenido propio del diseñador (DUMMY).
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+const columns = [
+  { title: 'Portfolio', links: [
+    { label: 'Work', href: '/work/' },
+    { label: 'About', href: '/about/' },
+    { label: 'Contact', href: '/contact/' },
+  ]},
+  { title: 'Elsewhere', links: [
+    { label: 'LinkedIn', href: site.links.linkedin },
+    { label: 'Email', href: `mailto:${site.email}` },
+    { label: 'CV (PDF)', href: site.links.cv },
+  ]},
+  { title: 'Info', links: [
+    { label: 'Colophon', href: '/about/' },
+    { label: 'Made with Astro', href: 'https://astro.build' },
+  ]},
+];
+---
+<footer class="ftr">
+  <div class="container ftr__top">
+    <div class="ftr__brand">
+      <a class="ftr__wordmark" href="/">{site.name}</a>
+      <p class="ftr__tagline">{site.tagline}</p>
+      <div class="ftr__cta">
+        <a class="ftr__btn ftr__btn--primary" href="/contact/">Get in touch</a>
+        <a class="ftr__btn ftr__btn--outline" href={site.links.cv}>Download CV</a>
+      </div>
+    </div>
+    <div class="ftr__cols">
+      {columns.map((col) => (
+        <div class="ftr__col">
+          <h2 class="ftr__col-title label">{col.title}</h2>
+          <ul role="list">
+            {col.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="container ftr__bottom">
+    <span class="label">© {year} {site.name}</span>
+    <span class="label ftr__muted">Visual system derived from an editorial reference — see DESIGN-SYSTEM.md</span>
+  </div>
+</footer>
+
+<style>
+  .ftr { background: var(--color-black); color: var(--color-on-dark); margin-top: var(--space-9); }
+  .ftr__top {
+    display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-8);
+    padding-block: var(--space-8);
+  }
+  .ftr__wordmark {
+    font-family: var(--font-display); font-weight: var(--fw-bold);
+    font-size: var(--fs-h1); letter-spacing: var(--ls-wordmark); text-transform: uppercase;
+    text-decoration: none; color: var(--color-on-dark);
+  }
+  .ftr__tagline { font-family: var(--font-serif); font-style: italic; color: var(--color-on-dark-muted); margin-top: var(--space-2); }
+  .ftr__cta { display: flex; gap: var(--space-3); margin-top: var(--space-5); flex-wrap: wrap; }
+  .ftr__btn {
+    font-family: var(--font-ui); font-size: var(--fs-button); font-weight: var(--fw-medium);
+    letter-spacing: var(--ls-label); text-transform: uppercase; text-decoration: none;
+    padding: var(--space-3) var(--space-5); border-radius: var(--radius-none);
+  }
+  .ftr__btn--primary { background: var(--color-accent); color: var(--color-ink); }
+  .ftr__btn--primary:hover { background: var(--accent-hover); text-decoration: none; } /* [INFERIDO] */
+  .ftr__btn--outline { border: 1px solid var(--color-on-dark); color: var(--color-on-dark); }
+  .ftr__btn--outline:hover { background: var(--color-on-dark); color: var(--color-ink); text-decoration: none; } /* [INFERIDO] */
+
+  .ftr__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+  .ftr__col-title { color: var(--color-on-dark); display: block; margin-bottom: var(--space-3); }
+  .ftr__col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+  .ftr__col a {
+    font-family: var(--font-ui); font-size: var(--fs-small); text-decoration: none; color: var(--color-on-dark-muted);
+  }
+  .ftr__col a:hover { color: var(--color-on-dark); text-decoration: underline; text-underline-offset: 2px; } /* [INFERIDO] */
+
+  .ftr__bottom {
+    border-top: 1px solid var(--color-rule-on-dark);
+    padding-block: var(--space-4);
+    display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap;
+    color: var(--color-on-dark-muted);
+  }
+  .ftr__bottom .label { color: var(--color-on-dark-muted); }
+  .ftr__muted { font-weight: var(--fw-regular); letter-spacing: 0; text-transform: none; font-family: var(--font-ui); }
+
+  @media (max-width: 720px) {
+    .ftr__top { grid-template-columns: 1fr; gap: var(--space-6); }
+    .ftr__cols { grid-template-columns: 1fr 1fr; }
+  }
+</style>

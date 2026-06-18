@@ -1,0 +1,15 @@
+---
+// Meta — derivado de C-ART/C-DES (icono libro + "X MIN READ").
+// `icon`: 'read' (libro) por defecto; admite texto libre vía slot.
+interface Props { icon?: 'read' | 'none'; }
+const { icon = 'read' } = Astro.props;
+---
+<span class="meta">
+  {icon === 'read' && (
+    <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M3 5.5h7a2 2 0 0 1 2 2V20a2 2 0 0 0-2-2H3z" />
+      <path d="M21 5.5h-7a2 2 0 0 0-2 2V20a2 2 0 0 1 2-2h7z" />
+    </svg>
+  )}
+  <slot />
+</span>
