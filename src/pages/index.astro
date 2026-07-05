@@ -1,69 +1,152 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import SectionBar from '../components/SectionBar.astro';
-import Card from '../components/Card.astro';
-import CtaBlock from '../components/CtaBlock.astro';
-import { site } from '../data/site';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Marquee from '../components/Marquee.astro';
+import ContactSection from '../components/ContactSection.astro';
 
-const cases = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
-const [featured, ...rest] = cases;
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 ---
-<BaseLayout
-  title="Home"
-  description={`${site.role} working on B2C marketplaces and complex internal tools. Selected case studies and process.`}
+
+<Base
+  title="Alex Serrano — Senior Product Designer"
+  description="Senior Product Designer based in Madrid. Dummy portfolio: retention, B2B architecture and design systems work. Currently open to new opportunities."
+  preloader
 >
-  <!-- Statement / hero (tesis discreta, sin romper el estilo editorial) -->
-  <section class="container intro measure">
-    <p class="intro__lede">
-      {site.role} working on <strong>B2C marketplaces</strong>, dense <strong>B2B tools</strong>
-      and <strong>design systems</strong>. I care about the moments where a decision turns into a
-      number — conversion, completion, time-to-task.
-    </p>
-  </section>
-
-  <!-- Caso destacado -->
-  <section class="container featured">
-    <Card
-      size="large"
-      href={`/work/${featured.id}/`}
-      category={featured.data.category}
-      title={featured.data.title}
-      summary={featured.data.summary}
-      coverLabel="FEATURED COVER 16:9"
-    />
-  </section>
-
-  <!-- Selected work -->
-  <section class="container">
-    <SectionBar label="Selected work" />
-    <div class="grid">
-      {rest.map((c) => (
-        <Card
-          href={`/work/${c.id}/`}
-          category={c.data.category}
-          title={c.data.title}
-          summary={c.data.summary}
-          coverLabel="COVER 16:9"
-        />
-      ))}
+  <!-- DUMMY: todo el contenido de esta página es de relleno -->
+  <header id="hero">
+    <p class="hero-eyebrow tl"><span>Senior Product Designer</span></p>
+    <h1 class="hero-title">
+      <span class="tl"><span>Alex</span></span>
+      <span class="tl"><span>Serrano</span></span>
+    </h1>
+    <div class="hero-bottom">
+      <p class="hero-desc rv">
+        Madrid born and based. Eight years of experience across food tech, logistics and banking.
+        I design the boring middle of products — where retention lives.
+      </p>
+      <div class="hero-right">
+        <span class="pill available rv"><span class="pill-dot"></span>Available for work</span>
+        <span class="pill rv">Madrid, Spain</span>
+        <span class="pill rv">8 yrs experience</span>
+      </div>
     </div>
-    <p class="seeall"><a href="/work/" class="label">All work →</a></p>
+    <div class="scroll-hint" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="sh-line"></div>
+    </div>
+  </header>
+
+  <Marquee />
+
+  <section id="work" class="page-section">
+    <div class="s-header rv">
+      <div>
+        <p class="s-label">Selected work</p>
+        <h2 class="s-title">Work</h2>
+      </div>
+      <span class="s-count">{String(work.length + 1).padStart(2, '0')}</span>
+    </div>
+    <div class="projects">
+      {work.map((entry, i) => <ProjectCard entry={entry} index={i} />)}
+      <!-- DUMMY: proyecto WIP sin página propia -->
+      <div class="pcard rv grad-green pcard--wip">
+        <div class="pcard-inner">
+          <div class="pcard-info">
+            <div class="pcard-top">
+              <span class="pnum">{String(work.length + 1).padStart(2, '0')}</span>
+              <span class="wip-badge"><span class="wip-badge-dot"></span>Work in progress</span>
+            </div>
+            <div class="pcard-mid">
+              <div>
+                <p class="pcompany">Bocado / 2025 – 2026</p>
+                <h3 class="pname">Finding the right incentive to double referral volume</h3>
+              </div>
+              <div class="tags">
+                <span class="tag">Growth</span>
+                <span class="tag">A/B Testing</span>
+              </div>
+            </div>
+            <div class="pmetrics">
+              <div class="pmetric">
+                <span class="pm-val">+140%</span>
+                <span class="pm-label">Referral volume growth (dummy)</span>
+              </div>
+              <div class="pmetric">
+                <span class="pm-val">4.8%</span>
+                <span class="pm-label">Final referral rate (was 2.0%)</span>
+              </div>
+            </div>
+          </div>
+          <div class="pcard-vis">
+            <div class="pcard-bg"></div>
+            <div class="blob blob1"></div>
+            <div class="blob blob2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <CtaBlock />
-</BaseLayout>
+  <section id="about" class="page-section">
+    <div class="s-header rv">
+      <div>
+        <p class="s-label">About</p>
+        <h2 class="s-title">About</h2>
+      </div>
+      <a class="cv-btn" href="/about">
+        Full profile
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3">
+          <path d="M2 6h8M7 3l3 3-3 3" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </a>
+    </div>
+    <div class="about-grid">
+      <div class="about-bio rv">
+        <p>
+          I'm a product designer who measures success in <strong>retained users</strong>, not
+          dribbble likes. My happy place is the intersection of behavioural data and interface
+          craft — <em>finding the one decision that moves the number</em>.
+        </p>
+        <p>
+          Currently designing growth and retention systems at a food-tech membership app.
+          Before that: a freight platform and a mobile-first bank. <!-- DUMMY -->
+        </p>
+      </div>
+      <div class="about-side rv">
+        <div>
+          <p class="detail-h">Experience</p>
+          <ul class="exp-list">
+            <li class="exp-item">
+              <span class="ei-l"><span class="ei-co">Bocado</span><span class="ei-role">Senior Product Designer</span></span>
+              <span class="ei-yr">2024 –</span>
+            </li>
+            <li class="exp-item">
+              <span class="ei-l"><span class="ei-co">Fletta</span><span class="ei-role">Senior Product Designer</span></span>
+              <span class="ei-yr">2023 – 24</span>
+            </li>
+            <li class="exp-item">
+              <span class="ei-l"><span class="ei-co">Brizo Bank</span><span class="ei-role">Product Designer</span></span>
+              <span class="ei-yr">2021 – 23</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p class="detail-h">Recognition</p>
+          <ul class="awards-list">
+            <li class="award-item">
+              <span class="aw-l"><span class="aw-title">Best Fintech UX — shortlist</span><span class="aw-issuer">Dummy Awards</span></span>
+              <span class="aw-yr">2023</span>
+            </li>
+            <li class="award-item">
+              <span class="aw-l"><span class="aw-title">Design system talk</span><span class="aw-issuer">Dummy Conf, Madrid</span></span>
+              <span class="aw-yr">2024</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<style>
-  .intro { padding-top: var(--space-7); }
-  .intro__lede { font-family: var(--font-serif); font-size: var(--fs-h2); line-height: var(--lh-snug); }
-  .intro__lede strong { font-weight: var(--fw-regular); text-decoration: underline; text-underline-offset: 3px; }
-  .featured { padding-top: var(--space-8); }
-  .grid {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-7);
-    margin-top: var(--space-6);
-  }
-  .seeall { margin-top: var(--space-6); }
-  .seeall a { text-decoration: none; }
-  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
-</style>
+  <ContactSection />
+</Base>

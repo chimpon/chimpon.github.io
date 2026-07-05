@@ -1,149 +1,143 @@
-# DESIGN-SYSTEM.md — sistema derivado de monocle.com
+# DESIGN-SYSTEM.md — Trazabilidad del sistema derivado
 
-Portfolio de Product Designer que debe ser **indistinguible** de monocle.com.
-Todo token/componente se traza a una fuente. Las inferencias permitidas
-(estados de interacción) y las sustituciones de tipografía propietaria están
-marcadas y justificadas.
+Sitio de referencia: **dvdrod.com** (David Rodriguez, Senior Product Designer).
 
-## Fuentes
+**Método de extracción:** las dos URLs se descargaron en vivo. Todo el CSS del
+sitio está embebido en `<style>` dentro del HTML, así que los valores de esta
+tabla son **exactos** (copiados del código fuente, no medidos sobre capturas).
+Las capturas adjuntas se usaron para confirmación visual (hero, cards, header
+cápsula, versión móvil, secciones del caso de estudio).
 
-| Código | Fuente |
+Fuentes citadas:
+
+| Clave | Fuente |
 |---|---|
-| C-ART | Captura artículo — *Hydro Circal 100R* (`/design/hydro-circal-100r-norway/`) |
-| C-DES | Captura listado Design (`/design/page/2/`) |
-| C-SHOP | Captura Shop (`/shop/`) |
-| C-RAD | Captura Radio (`/radio/`) |
-| C-MENU | Captura menú móvil (overlay) |
-| LIVE | `https://monocle.com/` — estructura confirmada en vivo; **CSS computado no expuesto** por el extractor |
-
-> **Método.** Pude leer la home en vivo (confirma que es WordPress y los patrones
-> de maquetación), pero no el CSS computado, y `bash` no tiene salida a `monocle.com`.
-> Por tanto los **valores numéricos están medidos sobre captura**, vía permitida
-> por el brief cuando no hay acceso al CSS. Marcados como aproximados (`≈`).
+| `[H]` | `https://dvdrod.com/` — bloque `<style>` inline |
+| `[C]` | `https://dvdrod.com/neotaste-quests` — bloque `<style>` inline |
+| `[G]` | `<link>` a Google Fonts presente en ambas páginas |
+| `[S1..S4]` | Capturas adjuntas (S1 hero desktop, S2 listado work + header cápsula, S3 caso "lessons learned/what's next" + next project, S4 móvil) |
 
 ---
 
-## 1. Trazabilidad de tokens
+## 1. Tokens
 
 ### Color
 
-| Token | Valor | Fuente | Nota |
+| Token | Dark (defecto) | Light | Fuente |
 |---|---|---|---|
-| `--color-paper` | `#ffffff` | C-ART, C-DES, C-RAD | Fondo de página |
-| `--color-ink` | `#000000` | C-ART, C-DES | Texto, titulares, barras de sección |
-| `--color-cream` | `#eae7dd` ≈ | C-SHOP | Fondo cálido de tiles de producto |
-| `--color-cream-soft` | `#f3f1ea` ≈ | C-SHOP | Paneles claros del hero de Shop |
-| `--color-accent` | `#ffd200` ≈ | C-RAD, C-SHOP, C-DES | Amarillo de marca: SUBSCRIBE, LISTEN LIVE, badge play, paginación activa, "ON AIR" |
-| `--color-accent-soft` | `#f6f1d6` ≈ | C-RAD | Fondo del bloque newsletter |
-| `--color-dark` | `#1a1a1a` ≈ | C-DES, C-RAD | "LATEST IN MONOCLE RADIO" y fondo de la página Radio |
-| `--color-black` | `#000000` | todas | Footer sólido |
-| `--color-on-dark` | `#ffffff` | C-RAD | Texto sobre oscuro |
-| `--color-on-dark-muted` | `#bfbfbf` ≈ | C-RAD | Meta sobre oscuro |
-| `--color-muted` | `#6e6e6e` ≈ | C-DES, C-ART | Meta "X MIN READ", standfirst secundario |
-| `--color-rule` | `#000000` | C-DES, C-SHOP | Regla pesada sobre títulos de sección |
-| `--color-rule-hair` | `#dddddd` ≈ | C-DES | Hairline entre items de la lista LATEST |
-| `--color-field-border` | `#cccccc` ≈ | C-RAD, C-DES | Borde del input de email |
-
-**Exclusión explícita — ROJO.** El rojo presente (anuncios *le19M*/*Chanel*,
-portadas de revista, ilustración de la columna de Opinión) es contenido
-publicitario/editorial, **no** un token de UI del sitio. Se excluye del sistema
-para no inventar un acento que la interfaz no usa.
+| `--bg` | `#0C0C0B` | `#F0EDE5` | `[H] :root` / `[H] [data-theme="light"]` |
+| `--bg2` | `#141413` | `#E8E5DD` | `[H]` |
+| `--fg` | `#EDEDE8` | `#0C0C0B` | `[H]` |
+| `--muted` | `#93938F` | `#5B5A57` | `[H]` |
+| `--border` | `rgba(237,237,232,.09)` | `rgba(12,12,11,.1)` | `[H]` |
+| `--border-hover` | `rgba(237,237,232,.38)` | `rgba(12,12,11,.38)` | `[H]` |
+| `--accent` (global) | `#FF3D00` | `#FF3D00` | `[H]` |
+| `--accent2` | `#FF7A5C` | `#D93300` | `[H]` |
+| `--accent` (página de caso NeoTaste) | `#00C96B` | `#00A854` | `[C] :root` — cada caso puede redefinir el acento |
+| Disponible ("available for work") | `rgba(0,220,100,.85)` / borde `.28` | `#006E2D` / borde `.35` | `[H] .pill.available` |
+| WIP badge | `#F59E0B`, bg `rgba(245,158,11,.12)`, borde `.3` | igual | `[H] .wip-badge`, confirmado en S2/S3 |
+| Nav cápsula fondo | `rgba(12,12,11,.80)` | `rgba(240,237,229,.85)` | `[H] nav.scrolled` |
 
 ### Tipografía
 
-| Token | Valor | Fuente | Nota |
-|---|---|---|---|
-| `--font-display` | `"Playfair Display", "GFS Didot", Georgia, serif` | C-DES (wordmark) | **[SUSTITUTO]** Didone de alto contraste; fuente real propietaria |
-| `--font-serif` | `"Source Serif 4", "Spectral", Georgia, serif` | C-ART | **[SUSTITUTO]** Serif transicional tipo Plantin para titulares + cuerpo |
-| `--font-ui` | `"Helvetica Neue", Helvetica, Arial, sans-serif` | C-DES, C-RAD | **[SUSTITUTO]** Sans neo-grotesca para nav/labels/botones |
-| `--fs-wordmark` | `4rem` (64px ≈) | C-DES | MONOCLE en masthead |
-| `--fs-h1` | `2.25rem` (36px ≈) | C-ART | Título de artículo |
-| `--fs-h2` | `1.375rem` (22px ≈) | C-DES | Titular de card / heading de sección |
-| `--fs-lead` | `1.1875rem` (19px ≈) | C-ART | Standfirst |
-| `--fs-body` | `1.0625rem` (17px ≈) | C-ART | Cuerpo |
-| `--fs-nav` | `0.8125rem` (13px ≈) | C-DES | Nav horizontal |
-| `--fs-button` | `0.75rem` (12px ≈) | C-SHOP | Texto de botón |
-| `--fs-label` | `0.6875rem` (11px ≈) | C-DES | Categoría / meta en mayúsculas |
-| `--lh-body` | `1.55` | C-ART | Interlineado de lectura |
-| `--ls-label` | `0.08em` | C-DES | Tracking de labels/nav/botones |
-| `--fw-regular` | `400` | C-ART | Titulares serif en peso libro (no bold) |
-| `--fw-medium` | `500` | C-DES | Nav, labels, botones |
-
-### Espaciado, layout, radios, bordes, sombra
-
-| Token | Valor | Fuente | Nota |
-|---|---|---|---|
-| `--space-1..9` | `4 → 96px` | C-DES, C-ART | Escala derivada de ritmos observados |
-| `--container-wide` | `1200px` ≈ | C-DES | Ancho máximo de contenido |
-| `--measure` | `680px` ≈ | C-ART | Columna de lectura del artículo |
-| `--radius-none` | `0` | C-SHOP, C-RAD | Botones/inputs/cards de esquina viva |
-| `--radius-pill` | `999px` | C-DES, C-RAD | Badge play y paginación activa (círculo) |
-| `--rule-heavy` | `2px solid #000` | C-DES, C-SHOP | Sobre LATEST/RELATED/FEATURED PRODUCTS |
-| `--rule-hair` | `1px solid #ddd` | C-DES | Entre items de lista |
-| `--border-button` | `1px solid #000` | C-DES | Botón outline SHARE |
-| `--shadow-product` | `0 12px 28px rgba(0,0,0,.18)` ≈ | C-SHOP | **Solo imagen de portada/producto**; la UI es plana |
-
----
-
-## 2. Inventario de componentes
-
-Todos se componen con las primitivas anteriores. Ninguno introduce lenguaje
-visual nuevo.
-
-| # | Componente | Fuente | Composición |
-|---|---|---|---|
-| 1 | Topbar utilitaria (MAGAZINE/RADIO/SHOP · search/LOG IN/SUBSCRIBE/bag/€) | C-DES, C-SHOP | sans 13px + botón amarillo |
-| 2 | Masthead (wordmark centrado + flanco izq./der. con iconos) | C-DES, LIVE | display 64px tracked |
-| 3 | Nav primaria horizontal (uppercase, hairline inferior) | C-DES | sans uppercase + `--ls-label` |
-| 4 | Barra de sección (banda negra, label blanco) | C-DES | `--color-ink` + texto blanco |
-| 5 | Breadcrumb ("Home") | C-DES | sans small |
-| 6 | Lead/hero de artículo (imagen + categoría + titular + lead + meta) | C-DES | card grande |
-| 7 | Card de artículo (cover, categoría, titular serif, meta) — variantes large / 4-up / fila | C-DES | imagen + labels + serif |
-| 8 | Fila de lista LATEST (hairline, titular + lead + thumb + meta) | C-DES | `--rule-hair` |
-| 9 | Módulo oscuro (LATEST IN MONOCLE RADIO) | C-DES, C-RAD | `--color-dark` + texto blanco |
-| 10 | Widget "On Air" (ON AIR amarillo + título + LISTEN LIVE) | C-RAD | card oscura + botón amarillo |
-| 11 | Card de audio (thumb + badge play circular amarillo + categoría + "X MIN") | C-RAD | badge `--radius-pill` |
-| 12 | Botón primario (amarillo / texto negro / uppercase) | C-SHOP, C-RAD | `--color-accent` |
-| 13 | Botón secundario (outline negro o fondo negro/texto blanco) | C-DES | `--border-button` |
-| 14 | Tag / categoría (uppercase sans pequeño) | C-DES | `--fs-label` |
-| 15 | Línea de meta (icono libro + "X MIN READ") | C-ART, C-DES | sans + `--color-muted` |
-| 16 | Bloque newsletter (fondo amarillo pálido, ilustración, input + botón) | C-RAD | `--color-accent-soft` |
-| 17 | Input de email (rectángulo bordeado + botón adyacente) | C-RAD, C-DES | `--border-field` |
-| 18 | Card de producto (fondo cream, marca, nombre serif, precio "€ 355.00") | C-SHOP | `--color-cream` |
-| 19 | Paginación (números; activo = círculo amarillo; siguiente = flecha en círculo) | C-DES, C-SHOP | `--radius-pill` |
-| 20 | Fila de compartir (SHARE + iconos sociales) | C-ART | sans + iconos |
-| 21 | Sidebar RECOMMENDATIONS (thumb + titular + meta) | C-ART | lista compacta |
-| 22 | Footer (negro, wordmark + tagline, SUBSCRIBE/SHARE, columnas, © 2026) | todas | `--color-black` + columnas |
-| 23 | Menú móvil overlay (links serif grandes + columnas TOPICS/DISCOVER/MONOCLE) | C-MENU | full-screen |
-| 24 | Barra free-shipping (texto serif itálico centrado) | C-SHOP | serif italic |
-
-**Componentes que el portfolio necesita y NO existen en Monocle**
-(se compondrán solo con primitivas existentes, sin lenguaje nuevo):
-- **Card de caso de estudio** → patrón de la card de artículo (#7): cover 16:9 + categoría/tag + titular serif + lead + meta.
-- **Cabecera de caso** → patrón del lead de artículo (#6) + columna `--measure`.
-- **Bloque antes/después y artefactos** → imágenes placeholder en cuadrícula con la misma tipografía de pie de foto que C-ART ("Safety first", "The Othr light…").
-
----
-
-## 3. Inferencias declaradas (la única licencia permitida)
-
-Estados no observables en captura estática, inferidos de forma conservadora y
-coherente con lo visible:
-
-| Inferencia | Decisión | Justificación |
+| Uso | Valor | Fuente |
 |---|---|---|
-| `:hover` nav/links | Subrayado | Patrón editorial estándar; no introduce color nuevo |
-| `:hover` botón primario | Amarillo `#f0c400` (–oscurecido) | Variación mínima del propio acento |
-| `:hover` botón outline | Relleno negro + texto blanco | Reutiliza la variante negra ya visible en el sitio |
-| `:hover` card | Subrayado del titular | Conservador; evita zoom/sombra inventados |
-| `:focus` | Anillo `2px` color ink | **Adición de accesibilidad** (no visible en captura); declarada |
-| Transiciones | `150–200ms ease` en color/opacidad | Estándar discreto |
+| Display (logo, hero, títulos de sección, nº de caso) | **Syne** 700/800 | `[G]`, `[H] .hero-title, .s-title, .nav-logo` |
+| Cuerpo, UI, títulos de caso y métricas | **Inter** 300/400/600 (+700/800 en headings/valores) | `[G]`, `[H] body, .pname, .pm-val`, `[C] .cs-title` |
+| Hero title | `clamp(72px,12vw,176px)` · 800 · lh 0.88 · ls −0.05em | `[H] .hero-title` |
+| Section title | `clamp(52px,8vw,110px)` · 800 · lh 0.88 · ls −0.045em | `[H] .s-title` |
+| Título de caso (hero) | Inter `clamp(52px,9vw,130px)` · 800 · lh 0.9 · ls −0.045em | `[C] .cs-title` |
+| Título de sección de caso | Inter `clamp(32px,4.5vw,60px)` · 800 · lh 1.05 · ls −0.035em | `[C] .cs-section-title` |
+| Párrafo de caso | 17px · 300 · lh 1.7 | `[C] .cs-section-body p` |
+| Labels/eyebrows | 9–12px · uppercase · ls 0.08–0.18em · `--muted` | `[H] .s-label, .hero-eyebrow`, `[C] .cs-section-label` |
+| Descripción hero | 15px · 300 · lh 1.65 · máx 360px | `[H] .hero-desc` |
+
+### Espaciado, grid, radios, sombras
+
+| Token | Valor | Fuente |
+|---|---|---|
+| Padding lateral | 44px desktop / 24px ≤900px | `[H] nav, #work…`, media queries |
+| Padding vertical de sección | 120px home · 100px caso · 72–80px móvil | `[H] #work`, `[C] .cs-section` |
+| Ancho interior del caso | `max-width: 1200px` centrado | `[C] .cs-section-inner` |
+| Cuerpo de caso | `max-width: 640px` (párrafos), 760px (títulos) | `[C] .cs-section-body/.cs-section-title` |
+| `--radius` 14px | cards proyecto, result cards | `[H] :root`, `[C] .cs-result-card` |
+| 12px | meta-strip, findings, quote, stakeholders | `[C]` |
+| 16px | quest cards, chart, metrics, visuales | `[C]` |
+| 100px (pill) | botones, tags, badges, nav cápsula | `[H]` |
+| Sombra nav | `0 4px 24px rgba(0,0,0,.25)` dark / `.10` light | `[H] nav.scrolled` |
+| Ruido de fondo | SVG `feTurbulence` inline, opacidad 0.028, `position:fixed` | `[H] body::after` |
+
+### Motion
+
+| Uso | Valor | Fuente |
+|---|---|---|
+| Transición global de tema | `0.4s cubic-bezier(.25,.46,.45,.94)` | `[H] :root --transition` |
+| Nav plano → cápsula | `0.45s cubic-bezier(.4,0,.2,1)` en top/left/right/padding/radius + `0.4s ease` en fondo/blur/sombra | `[H] nav → nav.scrolled` |
+| Zoom imagen card hover | `transform 0.9s`, `scale(1.06)` | `[H] .pcard-bg` |
+| Marquee | `28s linear infinite`, pausa on hover | `[H] .marquee-track` |
+| Dot parpadeante | `blink 2.2s ease infinite` | `[H] @keyframes blink` |
+| Preloader | nombre con reveal + barra `0.9s cubic-bezier(.76,0,.24,1)` | `[H] #preloader` |
+| Reveals de entrada | el origen usa GSAP (`gsap.set` en comentarios del CSS) | `[H]` comentarios |
 
 ---
 
-## 4. Decisión abierta para el checkpoint (la marco, no la invento)
+## 2. Header (requisito explícito del encargo)
 
-Las tres familias tipográficas de Monocle son **propietarias y no
-licenciables**. No puedo extraer ni usar los archivos reales. Por eso son
-`[SUSTITUTO]` y necesito tu confirmación. Recomendación por defecto y
-alternativas en el mensaje del chat.
+Comportamiento copiado literal de `[H] nav / nav.scrolled`:
+
+- **Reposo:** barra plana `position:fixed`, ancho completo, `padding:22px 44px`, sin fondo.
+- **Con scroll (`.scrolled`):** `top:16px; left:22%; right:22%; padding:14px 36px; border-radius:100px; background rgba translúcido; backdrop-filter:blur(20px); box-shadow`.
+- **Móvil ≤900px:** reposo `18px 24px`; scrolled `top:12px; left:16px; right:16px; padding:12px 20px` (casi todo el ancho con márgenes, como pediste y como muestra S4).
+
+## 3. Inventario de componentes
+
+| Componente | Composición (todo con tokens de arriba) | Fuente |
+|---|---|---|
+| **Nav** | logo Syne 15px/800 + links 12px uppercase con subrayado animado + botón tema pill | `[H] nav`, S1/S2/S4 |
+| **Theme toggle** | pill borde `--border`, 11px uppercase; hover invierte a `--fg`/`--bg` | `[H] .theme-btn` |
+| **Preloader** | nombre Syne clamp + barra de progreso 160×1px | `[H] #preloader` |
+| **Hero** | eyebrow + título 2 líneas + descripción 360px + pills derecha + scroll-hint vertical con línea animada | `[H] #hero`, S1 |
+| **Pills de estado** | `available` (verde, dot blink), ubicación, premio | `[H] .pill`, S1 |
+| **Marquee** | franja con bordes, items Syne 11px uppercase separados por ✦ | `[H] .marquee-wrap` |
+| **Section header** | label 10px + título Syne + contador, borde inferior | `[H] .s-header` |
+| **Project card (pcard)** | grid 2 col (info / visual), borde `--radius`, nº + tags pill, empresa + nombre Inter 800, métricas, visual con gradiente 145deg + blobs + flecha circular 44px | `[H] .pcard*`, S2 |
+| **WIP badge** | pill ámbar con dot blink | `[H] .wip-badge`, S2/S3 |
+| **About** | grid 1.1fr/0.9fr, bio 300 con `em` en acento, listas experiencia/premios con borde inferior, skill pills | `[H] #about` |
+| **Contact** | headline Syne gigante con link subrayado 4px acento, footer email + social links | `[H] #contact` |
+| **Case hero** | full-height, cover oscurecida, nº outline gigante (`-webkit-text-stroke`), título Inter, meta-strip 4 celdas | `[C] .cs-hero*` |
+| **Summary band** | TL;DR 19px + stats acento 34px | `[C] .cs-summary*` |
+| **Case sections** | label + título + body 640px; two-col; findings grid; steps list; quest cards con XP pill; chart de barras; quote borde-izq acento; metrics band; result cards; hypothesis; stakeholders; impl-steps; lessons; next-steps | `[C]`, S3 |
+| **Next project footer** | banda `--bg2` con nombre gigante + flecha circular 64px; variante WIP | `[C] .cs-next`, S3 |
+| **Cursor custom** | flecha SVG + pill etiqueta (estilo Miro), oculto en táctil | `[H] .cursor*` |
+
+## 4. Inferencias permitidas (estados no visibles en capturas)
+
+Todas están **en el CSS de origen**, así que ni siquiera hubo que inventar
+hovers; se copian tal cual (`.theme-btn:hover`, `.pcard:hover`, `.nav-links
+a:hover::after`, `.cs-next:hover`, `.copy-btn.copied`, etc.). Las únicas
+inferencias reales son:
+
+1. **Animaciones de entrada (reveals):** el origen las hace con GSAP y los
+   valores iniciales viven en JS (`gsap.set`), no en CSS. Se replican de forma
+   conservadora con CSS/JS vanilla (translateY(110%) → 0, que sí está en el
+   CSS como estado inicial de los spans) y `IntersectionObserver`.
+   *Justificación:* mismo efecto visible, sin dependencia de GSAP.
+2. **`:focus-visible`:** el origen no define estilos de foco; se añade un
+   outline con `--border-hover` por accesibilidad. Marcado como inferencia.
+3. **Página `/work` como listado propio:** el origen lista los proyectos en la
+   home (`#work`). La ruta `/work` exigida por el brief reutiliza exactamente
+   el mismo patrón `s-header + pcard`, sin componentes nuevos.
+4. **Pill de XP en quest cards:** el origen hardcodea el tinte verde
+   (`rgba(0,201,107,.1)`). Aquí se deriva del token con
+   `color-mix(in srgb, var(--accent) 10%, transparent)` para que funcione con
+   cualquier acento de caso. Mismo resultado visual con el acento verde.
+5. **`overflow-wrap: anywhere` en `.contact-headline`:** corrección detectada
+   en la auto-auditoría — el email dummy desbordaba en viewports estrechos.
+   No altera ningún token; solo permite partir la palabra.
+
+## 5. Divergencias deliberadas respecto al origen (contenido, no visual)
+
+- Textos e imágenes: **dummy** (marcados `<!-- DUMMY -->`), sin empresas reales.
+- Los placeholders de imagen usan los gradientes/blobs del propio sistema
+  (`[H] .p-* .pcard-bg`), nunca fotografía externa.
+- Analítica: Clarity con ID placeholder (el origen usa GA4).

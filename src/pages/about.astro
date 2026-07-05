@@ -1,75 +1,110 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import SectionBar from '../components/SectionBar.astro';
-import Placeholder from '../components/Placeholder.astro';
-import { site } from '../data/site';
+import Base from '../layouts/Base.astro';
 
-// DUMMY
-const tools = ['Figma', 'Astro', 'GA4', 'Clarity', 'Optimizely', 'n8n'];
-const experience = [
-  { role: 'Product Designer', org: 'Dummy Marketplace Co.', period: '2024–present' },
-  { role: 'Product Designer', org: 'Dummy Studio', period: '2021–2024' },
-  { role: 'UX/UI Designer', org: 'Dummy Agency', period: '2018–2021' },
+// DUMMY: toda la página es contenido de relleno — sustituir por el real
+const skills = [
+  'Product strategy',
+  'Interaction design',
+  'Design systems',
+  'User research',
+  'Prototyping',
+  'A/B testing',
+  'Figma',
+  'Design tokens',
+  'Behavioural data',
+  'Facilitation',
 ];
 ---
-<BaseLayout
-  title="About"
-  description={`${site.role} based in ${site.location}. Data-informed design for marketplaces, internal tools and systems.`}
+
+<Base
+  title="About — Alex Serrano"
+  description="Senior Product Designer with eight years across food tech, logistics and banking. Bio, experience and skills. Dummy content."
 >
-  <div class="container"><SectionBar label="About" /></div>
-
-  <section class="container about">
-    <div class="about__media">
-      <Placeholder ratio="1/1" label="AVATAR 1:1" />
+  <main class="page-section page-top">
+    <div class="s-header rv">
+      <div>
+        <p class="s-label">About</p>
+        <h1 class="s-title">About</h1>
+      </div>
+      <a class="cv-btn" href="#" aria-disabled="true">
+        Download CV
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3">
+          <path d="M6 2v6M3 6l3 3 3-3M2 10h8" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </a>
     </div>
-    <div class="about__body measure prose">
-      <p class="about__lede">
-        I'm a {site.role.toLowerCase()} based in {site.location}. <!-- DUMMY -->
-        I work where product decisions meet measurable behaviour — search and listing flows,
-        checkout, and the internal tools that keep a marketplace running.
-      </p>
-      <p>
-        I tend to be the only designer in the room, which has made me comfortable owning the whole
-        arc: framing the problem with evidence, drawing the tradeoffs out loud, shipping, and then
-        reading the numbers to see whether the decision held. I read a lot of analytics and I'm
-        sceptical of design that can't point to a mechanism.
-      </p>
-      <p>
-        Outside work: film photography, board games, Ashtanga yoga, and a long-running interest in
-        classical and Eastern philosophy that mostly shows up as a bias toward restraint.
-        <!-- DUMMY: reemplazar por bio real -->
-      </p>
 
-      <h2 class="label about__sub">Tools</h2>
-      <ul class="chips" role="list">{tools.map((t) => <li class="chip">{t}</li>)}</ul>
+    <div class="about-grid">
+      <div class="about-bio rv">
+        <p>
+          I'm Alex — a product designer who believes the most interesting problems live
+          <strong>after the signup screen</strong>. Acquisition gets the glory; retention pays the
+          bills. <em>I design for the second week, not the first impression.</em>
+        </p>
+        <p>
+          Over eight years I've worked across food tech, logistics and banking — usually as the
+          only designer in the room, which taught me to make the case with data before making it
+          with mockups.
+        </p>
+        <p>
+          Away from the screen I mentor early-career designers and give the occasional talk about
+          design systems and growth design. <!-- DUMMY -->
+        </p>
+      </div>
 
-      <h2 class="label about__sub">Experience</h2>
-      <ul class="exp" role="list">
-        {experience.map((e) => (
-          <li class="exp__row">
-            <span class="exp__role">{e.role} — {e.org}</span>
-            <span class="meta">{e.period}</span>
-          </li>
-        ))}
-      </ul>
+      <div class="about-side rv">
+        <div>
+          <p class="detail-h">Experience</p>
+          <ul class="exp-list">
+            <li class="exp-item">
+              <span class="ei-l"><span class="ei-co">Bocado</span><span class="ei-role">Senior Product Designer — Growth</span></span>
+              <span class="ei-yr">2024 –</span>
+            </li>
+            <li class="exp-item">
+              <span class="ei-l"><span class="ei-co">Fletta</span><span class="ei-role">Senior Product Designer — Platform</span></span>
+              <span class="ei-yr">2023 – 24</span>
+            </li>
+            <li class="exp-item">
+              <span class="ei-l"><span class="ei-co">Brizo Bank</span><span class="ei-role">Product Designer — Design System</span></span>
+              <span class="ei-yr">2021 – 23</span>
+            </li>
+            <li class="exp-item">
+              <span class="ei-l"><span class="ei-co">Freelance</span><span class="ei-role">Product & web design</span></span>
+              <span class="ei-yr">2017 – 21</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="detail-h">Recognition</p>
+          <ul class="awards-list">
+            <li class="award-item">
+              <span class="aw-l"><span class="aw-title">Best Fintech UX — shortlist</span><span class="aw-issuer">Dummy Awards</span></span>
+              <span class="aw-yr">2023</span>
+            </li>
+            <li class="award-item">
+              <span class="aw-l"><span class="aw-title">"Tokens before components"</span><span class="aw-issuer">Talk — Dummy Conf, Madrid</span></span>
+              <span class="aw-yr">2024</span>
+            </li>
+            <li class="award-item">
+              <span class="aw-l"><span class="aw-title">Design mentor</span><span class="aw-issuer">Dummy mentoring platform</span></span>
+              <span class="aw-yr">2022 –</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="detail-h">Skills & tools</p>
+          <div class="skills-row">
+            {skills.map((s) => <span class="skill-pill">{s}</span>)}
+          </div>
+        </div>
+      </div>
     </div>
-  </section>
-</BaseLayout>
+  </main>
 
-<style>
-  .about { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-8); padding-top: var(--space-7); align-items: start; }
-  .about__lede { font-family: var(--font-serif); font-size: var(--fs-lead); }
-  .about__sub { display: block; margin-top: var(--space-7); margin-bottom: var(--space-3); }
-  .chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
-  .chip {
-    font-family: var(--font-ui); font-size: var(--fs-label); letter-spacing: var(--ls-label);
-    text-transform: uppercase; border: var(--border-button); padding: var(--space-1) var(--space-3);
-  }
-  .exp { margin: 0; padding: 0; list-style: none; }
-  .exp__row { display: flex; justify-content: space-between; gap: var(--space-4); border-bottom: var(--rule-hair); padding-block: var(--space-3); }
-  .exp__role { font-family: var(--font-ui); font-size: var(--fs-small); }
-  @media (max-width: 720px) {
-    .about { grid-template-columns: 1fr; gap: var(--space-6); }
-    .about__media { max-width: 200px; }
-  }
-</style>
+  <footer class="cs-footer">
+    <p>© {new Date().getFullYear()} Alex Serrano · Dummy portfolio content</p>
+    <a class="cs-back-link" href="/contact">Get in touch</a>
+  </footer>
+</Base>

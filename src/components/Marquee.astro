@@ -1,0 +1,19 @@
+---
+// DUMMY: disciplinas — sustituir por las reales
+const items = [
+  'Product Strategy',
+  'Interaction Design',
+  'Design Systems',
+  'User Research',
+  'Prototyping',
+  'A/B Testing',
+];
+// Duplicado para el loop infinito (translateX(-50%))
+const track = [...items, ...items];
+---
+
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    {track.map((t) => <span class="mq-item">{t}</span>)}
+  </div>
+</div>

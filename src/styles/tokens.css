@@ -1,127 +1,112 @@
-/* =====================================================================
-   tokens.css — Sistema de diseño DERIVADO de monocle.com
-   ---------------------------------------------------------------------
-   Regla: nada aquí es inventado. Cada valor procede de una captura o de
-   la home en vivo. Las únicas inferencias permitidas son estados de
-   interacción (:hover/:focus/:active/:disabled, transiciones) y se marcan
-   con [INFERIDO]. Las sustituciones de tipografía propietaria se marcan
-   con [SUSTITUTO] y están pendientes de confirmación (checkpoint).
-
+/* ============================================================
+   TOKENS — derivados 100% de dvdrod.com (CSS en vivo)
    Fuentes:
-   C-ART  = captura artículo (Hydro Circal 100R)
-   C-DES  = captura listado Design
-   C-SHOP = captura Shop
-   C-RAD  = captura Radio
-   C-MENU = captura menú móvil (overlay)
-   LIVE   = https://monocle.com/ (estructura confirmada; CSS no expuesto)
-   ===================================================================== */
+     [H] https://dvdrod.com/            → <style> inline de la home
+     [C] https://dvdrod.com/neotaste-quests → <style> inline del caso
+   Nada aquí es inventado. Ver DESIGN-SYSTEM.md para trazabilidad
+   completa y las inferencias permitidas (estados de interacción).
+   ============================================================ */
 
 :root {
-  /* ---------------------------------------------------------------
-     COLOR  (hex ≈ medidos sobre captura; afinar contra CSS en vivo)
-     --------------------------------------------------------------- */
-  --color-paper:        #ffffff; /* fondo de página · C-ART/C-DES/C-RAD */
-  --color-ink:          #000000; /* texto/titulares/barras · C-ART/C-DES */
-  --color-cream:        #eae7dd; /* superficie cálida tiles producto · C-SHOP */
-  --color-cream-soft:   #f3f1ea; /* paneles claros hero shop · C-SHOP */
-  --color-accent:       #ffd200; /* AMARILLO marca: botones, play, paginación, ON AIR · C-RAD/C-SHOP/C-DES */
-  --color-accent-soft:  #f6f1d6; /* bloque newsletter (amarillo pálido) · C-RAD */
-  --color-dark:         #1a1a1a; /* secciones oscuras (LATEST IN RADIO, body radio) · C-DES/C-RAD */
-  --color-black:        #000000; /* footer sólido · todas */
-  --color-on-dark:      #ffffff; /* texto sobre oscuro · C-RAD */
-  --color-on-dark-muted:#bfbfbf; /* meta sobre oscuro · C-RAD */
-  --color-muted:        #6e6e6e; /* meta "X MIN READ", standfirst secundario · C-DES/C-ART */
-  --color-rule:         #000000; /* regla pesada sobre títulos de sección · C-DES/C-SHOP */
-  --color-rule-hair:    #dddddd; /* hairline entre items de lista LATEST · C-DES */
-  --color-rule-on-dark: rgba(255, 255, 255, 0.18); /* divisor sobre fondo oscuro (footer) · C-DES/C-SHOP */
-  --color-field-border: #cccccc; /* borde input email · C-RAD/C-DES */
+  /* ---- Color: tema oscuro (por defecto en el sitio origen) [H:root] ---- */
+  --bg:            #0C0C0B;
+  --bg2:           #141413;
+  --fg:            #EDEDE8;
+  --muted:         #93938F;
+  --border:        rgba(237, 237, 232, 0.09);
+  --border-hover:  rgba(237, 237, 232, 0.38);
+  --accent:        #FF3D00;   /* naranja del sitio global [H] */
+  --accent2:       #FF7A5C;
 
-  /* NOTA: el ROJO visible (anuncios le19M/Chanel, portadas, ilustración
-     opinión) es contenido publicitario/editorial, NO un token de UI.
-     Se EXCLUYE deliberadamente del sistema. */
+  /* ---- Radios [H:root, C] ---- */
+  --radius:        14px;      /* cards de proyecto */
+  --radius-sm:     12px;      /* meta-strip, findings, quote [C] */
+  --radius-lg:     16px;      /* quest cards, chart, metrics [C] */
+  --radius-pill:   100px;     /* pills, botones, tags, nav scrolled [H] */
 
-  /* ---------------------------------------------------------------
-     TIPOGRAFÍA
-     Las familias reales de Monocle son propietarias y no licenciables.
-     [SUSTITUTO] = recomendación web-disponible, pendiente de confirmar.
-     --------------------------------------------------------------- */
-  /* Display tipo Didone (wordmark / título de sitio · alto contraste) · C-ART/C-DES */
-  --font-display: "Playfair Display", "GFS Didot", Georgia, serif;        /* [SUSTITUTO] */
-  /* Serif de titulares y cuerpo (transicional/Garalde tipo Plantin) · C-ART */
-  --font-serif:   "Source Serif 4", "Spectral", Georgia, serif;           /* [SUSTITUTO] */
-  /* Sans neo-grotesca de UI: nav, labels, meta, botones · C-DES/C-RAD */
-  --font-ui:      "Helvetica Neue", Helvetica, Arial, sans-serif;         /* [SUSTITUTO] */
+  /* ---- Motion [H:root] ---- */
+  --transition:    0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-nav:      cubic-bezier(0.4, 0, 0.2, 1);      /* nav flat→cápsula [H:nav] */
+  --ease-load:     cubic-bezier(0.76, 0, 0.24, 1);    /* barra preloader [H:.pl-bar] */
 
-  /* Escala (px ≈ medidos en captura desktop ~1440px) */
-  --fs-wordmark: 4rem;       /* 64px · MONOCLE masthead · C-DES */
-  --fs-h1:       2.25rem;    /* 36px · título de artículo · C-ART */
-  --fs-h2:       1.375rem;   /* 22px · titular de card / heading sección · C-DES */
-  --fs-lead:     1.1875rem;  /* 19px · standfirst/lead · C-ART */
-  --fs-body:     1.0625rem;  /* 17px · cuerpo · C-ART */
-  --fs-small:    0.875rem;   /* 14px · texto auxiliar · C-ART */
-  --fs-nav:      0.8125rem;  /* 13px · nav horizontal · C-DES */
-  --fs-button:   0.75rem;    /* 12px · texto de botón · C-SHOP */
-  --fs-label:    0.6875rem;  /* 11px · categoría/meta uppercase · C-DES */
+  /* ---- Tipografía [H fonts.googleapis: Syne 700/800; Inter 300/400/600(+800 usado)] ---- */
+  --font-display:  'Syne', sans-serif;
+  --font-body:     'Inter', system-ui, sans-serif;
 
-  --lh-tight: 1.1;    /* titulares grandes */
-  --lh-snug:  1.25;   /* titulares de card */
-  --lh-body:  1.55;   /* cuerpo de lectura */
+  /* ---- Sombras [H:nav.scrolled] ---- */
+  --shadow-nav:    0 4px 24px rgba(0, 0, 0, 0.25);
 
-  --ls-label:    0.08em;  /* labels/nav/botones en mayúsculas · C-DES */
-  --ls-wordmark: 0.06em;  /* MONOCLE · C-DES */
+  /* ---- Semáforos de estado [H:.pill.available, .wip-badge] ---- */
+  --ok:            rgba(0, 220, 100, 0.85);
+  --ok-border:     rgba(0, 220, 100, 0.28);
+  --wip:           #F59E0B;
+  --wip-bg:        rgba(245, 158, 11, 0.12);
+  --wip-border:    rgba(245, 158, 11, 0.3);
 
-  --fw-regular: 400;  /* titulares serif y cuerpo (peso libro, NO bold) · C-ART */
-  --fw-medium:  500;  /* nav, labels, botones, barras de sección · C-DES */
-  --fw-bold:    600;  /* énfasis puntual */
-
-  /* ---------------------------------------------------------------
-     ESPACIADO  (escala derivada de ritmos observados · C-DES/C-ART)
-     --------------------------------------------------------------- */
-  --space-1: 0.25rem;  /*  4px */
-  --space-2: 0.5rem;   /*  8px */
-  --space-3: 0.75rem;  /* 12px */
-  --space-4: 1rem;     /* 16px */
-  --space-5: 1.5rem;   /* 24px · gutter desktop */
-  --space-6: 2rem;     /* 32px */
-  --space-7: 3rem;     /* 48px */
-  --space-8: 4rem;     /* 64px */
-  --space-9: 6rem;     /* 96px · separación entre bloques mayores */
-
-  /* ---------------------------------------------------------------
-     LAYOUT
-     --------------------------------------------------------------- */
-  --container-wide: 1200px;  /* ancho máximo de contenido · C-DES (aprox.) */
-  --measure:        680px;   /* columna de lectura del artículo · C-ART (aprox.) */
-  --gutter:         var(--space-5);
-
-  /* ---------------------------------------------------------------
-     RADIOS  (la UI es de esquinas vivas)
-     --------------------------------------------------------------- */
-  --radius-none: 0;        /* botones, inputs, cards · C-SHOP/C-RAD */
-  --radius-pill: 999px;    /* badge play y paginación activa (círculo) · C-DES/C-RAD */
-
-  /* ---------------------------------------------------------------
-     BORDES / REGLAS
-     --------------------------------------------------------------- */
-  --rule-heavy:    2px solid var(--color-rule);       /* sobre LATEST/RELATED/FEATURED · C-DES/C-SHOP */
-  --rule-hair:     1px solid var(--color-rule-hair);  /* entre items de lista · C-DES */
-  --border-button: 1px solid var(--color-ink);        /* botón outline SHARE · C-DES */
-  --border-field:  1px solid var(--color-field-border);/* input email · C-RAD */
-
-  /* ---------------------------------------------------------------
-     SOMBRA
-     La UI es plana (sin box-shadow). La sombra suave solo aparece en
-     la IMAGEN de producto/portada (tratamiento de foto, no token de UI).
-     --------------------------------------------------------------- */
-  --shadow-product: 0 12px 28px rgba(0, 0, 0, 0.18); /* solo cover producto · C-SHOP */
-
-  /* ---------------------------------------------------------------
-     [INFERIDO] Estados de interacción y transiciones
-     (no observables en captura estática; inferidos conservadores y
-     coherentes con lo visible)
-     --------------------------------------------------------------- */
-  --accent-hover:   #f0c400;            /* amarillo ligeramente más oscuro al hover */
-  --transition-fast: 150ms ease;
-  --transition-base: 200ms ease;
-  --focus-ring: 2px solid var(--color-ink); /* anillo de foco a11y (no visible en captura) */
+  /* ---- Acentos por proyecto (gradientes de card) [H:.p-*] ---- */
+  --grad-blue:     linear-gradient(145deg, #000B35 0%, #001F82 55%, #0050FF 100%);
+  --grad-green:    linear-gradient(145deg, #001209 0%, #003A16 55%, #006B28 100%);
+  --grad-red:      linear-gradient(145deg, #1A0400 0%, #4A1000 55%, #7A1E00 100%);
+  --grad-orange:   linear-gradient(145deg, #1A0A00 0%, #4A2000 55%, #CC5500 100%);
+  --grad-mint:     linear-gradient(145deg, #001A0A 0%, #004A20 55%, #00A854 100%);
 }
+
+/* ---- Color: tema claro [H:[data-theme="light"]] ---- */
+[data-theme='light'] {
+  --bg:            #F0EDE5;
+  --bg2:           #E8E5DD;
+  --fg:            #0C0C0B;
+  --muted:         #5B5A57;
+  --border:        rgba(12, 12, 11, 0.1);
+  --border-hover:  rgba(12, 12, 11, 0.38);
+  --accent:        #FF3D00;
+  --accent2:       #D93300;
+  --ok:            #006E2D;
+  --ok-border:     rgba(0, 110, 45, 0.35);
+  --shadow-nav:    0 4px 24px rgba(0, 0, 0, 0.10);
+}
+
+/* Acento por caso de estudio. Patrón trazable a [C:root]: la página de
+   caso del sitio origen redefine --accent (verde #00C96B / #00A854 light).
+   El azul reutiliza colores ya presentes en la home: #3B82F6 (blob de
+   .p-caixabank) y #0050FF (stop del gradiente .p-caixabank) — composición
+   de primitivas existentes, sin colores nuevos. */
+[data-accent='green'] {
+  --accent: #00C96B;
+}
+[data-theme='light'] [data-accent='green'],
+[data-theme='light'][data-accent='green'] {
+  --accent: #00A854;
+}
+[data-accent='blue'] {
+  --accent: #3B82F6;
+}
+[data-theme='light'] [data-accent='blue'],
+[data-theme='light'][data-accent='blue'] {
+  --accent: #0050FF;
+}
+
+/* ============================================================
+   ESCALAS DE REFERENCIA (valores literales del CSS origen; se
+   usan directamente en componentes, aquí solo documentados)
+
+   Font-size fluido:
+     hero-title       clamp(72px, 12vw, 176px)   [H:.hero-title]
+     s-title          clamp(52px, 8vw, 110px)    [H:.s-title]
+     contact-headline clamp(52px, 9vw, 130px)    [H:.contact-headline]
+     cs-title         clamp(52px, 9vw, 130px)    [C:.cs-title]
+     cs-section-title clamp(32px, 4.5vw, 60px)   [C:.cs-section-title]
+     cs-metric-val    clamp(40px, 5vw, 64px)     [C:.cs-metric-val]
+     pname            clamp(22px, 2.8vw, 40px)   [H:.pname]
+
+   Fijos (px): 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 22, 30, 34
+   Pesos: Syne 700/800 · Inter 300/400/600/700/800
+   Tracking: -0.05em títulos display · +0.08–0.18em labels uppercase
+   Line-height: 0.88–0.9 display · 1.05–1.08 títulos · 1.5–1.7 texto
+
+   Espaciado (px): 2 3 4 5 6 7 8 10 12 14 16 20 22 24 28 32 36 40 44
+                   48 56 60 64 72 80 100 120
+   Contenedor: padding lateral 44px desktop / 24px móvil;
+               secciones 120px vert. (home) / 100px (caso) / 80px móvil;
+               max-width interior de caso: 1200px [C:.cs-section-inner]
+   ============================================================ */

@@ -1,41 +1,286 @@
 ---
-import { getCollection, render } from 'astro:content';
-import CaseLayout from '../../layouts/CaseLayout.astro';
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
 
 export async function getStaticPaths() {
-  const entries = await getCollection('work');
-  const sorted = entries.sort((a, b) => a.data.order - b.data.order);
-  return sorted.map((entry) => ({
-    params: { slug: entry.id },
-    props: {
-      entry,
-      related: sorted
-        .filter((e) => e.id !== entry.id)
-        .map((e) => ({
-          href: `/work/${e.id}/`,
-          category: e.data.category,
-          title: e.data.title,
-          summary: e.data.summary,
-        })),
-    },
-  }));
+  const work = await getCollection('work');
+  return work
+    .filter((e) => !e.data.wip)
+    .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
-const { entry, related } = Astro.props;
-const { Content } = await render(entry);
+const { entry } = Astro.props;
 const d = entry.data;
+
+const all = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+const idx = all.findIndex((e) => e.id === entry.id);
+const num = String(idx + 1).padStart(2, '0');
+const next = all[(idx + 1) % all.length];
+
+// Blobs decorativos del hero según gradiente (primitivas del sistema)
+const heroBlobs: Record<string, [string, string]> = {
+  'grad-mint': ['#00C96B', '#6EE7B7'],
+  'grad-green': ['#00C96B', '#6EE7B7'],
+  'grad-blue': ['#3B82F6', '#93C5FD'],
+  'grad-orange': ['#F97316', '#FED7AA'],
+  'grad-red': ['#EF4444', '#FCA5A5'],
+};
+const [blobA, blobB] = heroBlobs[d.gradient] ?? heroBlobs['grad-orange'];
+
+const gradients: Record<string, string> = {
+  'grad-mint': 'var(--grad-mint)',
+  'grad-green': 'var(--grad-green)',
+  'grad-blue': 'var(--grad-blue)',
+  'grad-orange': 'var(--grad-orange)',
+  'grad-red': 'var(--grad-red)',
+};
+const heroGrad = gradients[d.gradient];
 ---
-<CaseLayout
-  title={d.title}
-  description={d.summary}
-  category={d.category}
-  company={d.company}
-  role={d.role}
-  period={d.period}
-  cover={d.cover}
-  coverRatio={d.coverRatio}
-  confidential={d.confidential}
-  related={related}
->
-  <Content />
-</CaseLayout>
+
+<Base title={`${d.title} — Alex Serrano`} description={d.summary} accent={d.accent} onDark>
+  <main>
+    <!-- HERO -->
+    <header class="cs-hero">
+      <div class="cs-hero-bg" style={`background:${heroGrad}`}></div>
+      <div class="cs-hero-blob" style={`width:420px;height:420px;top:-10%;right:-5%;background:${blobA}`}></div>
+      <div class="cs-hero-blob" style={`width:280px;height:280px;bottom:10%;right:20%;background:${blobB};opacity:.18`}></div>
+      <span class="cs-hero-number" aria-hidden="true">{num}</span>
+
+      <div class="cs-title-wrap">
+        <p class="cs-company">{d.company} / {d.period}</p>
+        <h1 class="cs-title tl"><span>{d.title}</span></h1>
+      </div>
+
+      <div class="cs-meta-strip rv">
+        <div class="cs-meta-item"><p class="cs-meta-label">Role</p><p class="cs-meta-value">{d.role}</p></div>
+        <div class="cs-meta-item"><p class="cs-meta-label">Company</p><p class="cs-meta-value">{d.company}</p></div>
+        <div class="cs-meta-item"><p class="cs-meta-label">Period</p><p class="cs-meta-value">{d.period}</p></div>
+        <div class="cs-meta-item"><p class="cs-meta-label">Focus</p><p class="cs-meta-value">{d.tags.join(' · ')}</p></div>
+      </div>
+
+      <div class="scroll-hint" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="sh-line"></div>
+      </div>
+    </header>
+
+    <!-- RESUMEN -->
+    {
+      d.tldr && (
+        <section class="cs-summary">
+          <div class="cs-summary-inner">
+            <p class="cs-summary-tldr rv" set:html={d.tldr.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} />
+            {d.stats && (
+              <div class="cs-summary-stats rv">
+                {d.stats.map((s) => (
+                  <div class="cs-summary-stat">
+                    <p class="cs-summary-stat-val">{s.value}</p>
+                    <p class="cs-summary-stat-label">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      )
+    }
+
+    <!-- SECCIONES -->
+    {
+      d.sections.map((s: any) => (
+        <section class="cs-section">
+          <div class="cs-section-inner">
+            {s.label && <p class="cs-section-label rv">{s.label}</p>}
+            {s.title && <h2 class="cs-section-title rv">{s.title}</h2>}
+            {s.paragraphs && (
+              <div class="cs-section-body rv">
+                {s.paragraphs.map((p: string) => (
+                  <p set:html={p.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} />
+                ))}
+              </div>
+            )}
+
+            {s.type === 'findings' && (
+              <div class="cs-findings">
+                {s.items.map((f: any) => (
+                  <div class="cs-finding rv">
+                    <p class="cs-finding-icon" aria-hidden="true">{f.icon}</p>
+                    <h3 class="cs-finding-title">{f.title}</h3>
+                    <p class="cs-finding-text">{f.text}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {s.type === 'hypothesis' && (
+              <div class="cs-hypothesis rv">
+                <p class="cs-hypothesis-label">Hypothesis</p>
+                <p class="cs-hypothesis-text">{s.statement}</p>
+                <p class="cs-hypothesis-rationale">{s.rationale}</p>
+              </div>
+            )}
+
+            {s.type === 'quests' && (
+              <div class="cs-quests">
+                {s.items.map((q: any, i: number) => (
+                  <div class="cs-quest-card rv">
+                    <p class="cs-quest-num">{String(i + 1).padStart(2, '0')}</p>
+                    <p class="cs-quest-icon" aria-hidden="true">{q.icon}</p>
+                    <h3 class="cs-quest-title">{q.title}</h3>
+                    <p class="cs-quest-text">{q.text}</p>
+                    {q.xp && <span class="cs-quest-xp">{q.xp}</span>}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {s.type === 'steps' && (
+              <div class="cs-steps">
+                {s.items.map((st: any, i: number) => (
+                  <div class="cs-step rv">
+                    <span class="cs-step-num">{String(i + 1).padStart(2, '0')}</span>
+                    <div class="cs-step-content">
+                      <h3 class="cs-step-title">{st.title}</h3>
+                      <p class="cs-step-text">{st.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {s.type === 'stakeholders' && (
+              <div class="cs-stakeholders">
+                {s.items.map((k: any) => (
+                  <div class="cs-stakeholder-card rv">
+                    <p class="cs-stakeholder-role">{k.role}</p>
+                    <p class="cs-stakeholder-need">{k.need}</p>
+                    <p class="cs-stakeholder-resolution">{k.resolution}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {s.type === 'chart' && s.chart && (
+              <div class="cs-chart rv">
+                <p class="cs-chart-title">{s.chart.title}</p>
+                <p class="cs-chart-sub">{s.chart.sub}</p>
+                <div class="cs-chart-bars">
+                  {s.chart.bars.map((b: any) => (
+                    <div class="cs-chart-col">
+                      <div class="cs-chart-bar-wrap">
+                        <div class:list={['cs-chart-bar', { hl: b.hl }]} style={`height:${b.h}%`} />
+                      </div>
+                      <span class="cs-chart-label">{b.label}</span>
+                    </div>
+                  ))}
+                </div>
+                {s.chart.legend && (
+                  <div class="cs-chart-legend">
+                    {s.chart.legend.map((l: any) => (
+                      <span class="cs-chart-legend-item">
+                        <span
+                          class="cs-chart-legend-dot"
+                          style={`background:${l.color === 'accent' ? 'var(--accent)' : 'var(--border-hover)'}`}
+                        />
+                        {l.label}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {s.type === 'results' && (
+              <div class="cs-result-grid">
+                {s.items.map((r: any) => (
+                  <div class="cs-result-card rv">
+                    <p class="cs-result-val">{r.value}</p>
+                    <p class="cs-result-label">{r.label}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {s.type === 'quote' && (
+              <blockquote class="cs-quote rv">
+                <p>{s.text}</p>
+              </blockquote>
+            )}
+
+            {s.type === 'lessons' && (
+              <div class="cs-lessons-list">
+                {s.items.map((l: any, i: number) => (
+                  <div class="cs-lesson rv">
+                    <span class="cs-lesson-num">{String(i + 1).padStart(2, '0')}</span>
+                    <div>
+                      <h3 class="cs-lesson-title">{l.title}</h3>
+                      <p class="cs-lesson-text">{l.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {s.type === 'nextsteps' && (
+              <div class="cs-next-steps">
+                {s.items.map((n: any, i: number) => (
+                  <div class="cs-next-step rv">
+                    <p class="cs-next-step-num">{String(i + 1).padStart(2, '0')}</p>
+                    <h3 class="cs-next-step-title">{n.title}</h3>
+                    <p class="cs-next-step-text">{n.text}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {s.type === 'visual' && (
+              <figure>
+                <div class="cs-visual rv" class:list={['cs-visual', 'rv', s.aspect === 'full' ? 'full' : 'wide']}>
+                  <div class="cs-visual-inner" style={`background:${heroGrad}`}>
+                    {/* DUMMY: placeholder de imagen con primitivas del sistema */}
+                    <span class="cs-visual-ph">Placeholder — replace with real screens</span>
+                  </div>
+                  {s.label && <span class="cs-visual-label">{s.label}</span>}
+                </div>
+                {s.caption && <figcaption class="cs-img-caption">{s.caption}</figcaption>}
+              </figure>
+            )}
+          </div>
+        </section>
+      ))
+    }
+
+    <!-- SIGUIENTE PROYECTO -->
+    {
+      next && (
+        <a class="cs-next" class:list={['cs-next', { 'cs-next--wip': next.data.wip }]} href={next.data.wip ? undefined : `/work/${next.id}/`}>
+          <p class="cs-next-label">
+            Next project
+            {next.data.wip && (
+              <span class="wip-badge">
+                <span class="wip-badge-dot" />
+                Work in progress
+              </span>
+            )}
+          </p>
+          <span class="cs-next-inner">
+            <span>
+              <span class="cs-next-name">{next.data.title}</span>
+              <span class="cs-next-company" style="display:block">{next.data.company} / {next.data.period}</span>
+            </span>
+            <span class="cs-next-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
+                <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </span>
+        </a>
+      )
+    }
+
+    <footer class="cs-footer">
+      <p>© {new Date().getFullYear()} Alex Serrano · Dummy portfolio content</p>
+      <a class="cs-back-link" href="/work">All work</a>
+    </footer>
+  </main>
+</Base>

@@ -10,21 +10,14 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build with Astro
+      - name: Install, build, and upload site
         uses: withastro/action@v3
-        with:
-          path: .
-          node-version: 24
 
   deploy:
     needs: build

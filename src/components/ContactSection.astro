@@ -1,0 +1,41 @@
+---
+// DUMMY: datos de contacto — sustituir por los reales
+const EMAIL = 'hello@example.com';
+const YEAR = new Date().getFullYear();
+
+interface Props {
+  /** 'section' en home; 'page' en /contact (añade padding superior) */
+  variant?: 'section' | 'page';
+}
+const { variant = 'section' } = Astro.props;
+---
+
+<section id="contact" class:list={['page-section', { 'page-top': variant === 'page' }]}>
+  <div class="s-header rv">
+    <div>
+      <p class="s-label">Contact</p>
+      <h2 class="s-title">Let's talk</h2>
+    </div>
+    <span class="s-count">✦</span>
+  </div>
+
+  <h3 class="contact-headline rv">
+    Have a project in mind?<br />
+    <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+  </h3>
+
+  <div class="contact-footer rv">
+    <div class="cf-left">
+      <p>Based in Madrid, Spain (CET)</p>
+      <p>Open to remote & hybrid roles across Europe</p>
+    </div>
+    <div class="cf-right">
+      <!-- DUMMY: enlaces sociales -->
+      <a href="#" rel="noopener">LinkedIn</a>
+      <a href="#" rel="noopener">Dribbble</a>
+      <a href="#" rel="noopener">Read.cv</a>
+    </div>
+  </div>
+
+  <p class="copy">© {YEAR} Alex Serrano · Dummy portfolio content</p>
+</section>
