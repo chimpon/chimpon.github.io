@@ -1342,27 +1342,33 @@ nav.scrolled {
   color: var(--fg);
 }
 
-/* Hipótesis [C .cs-hypothesis*] */
+/* Hipótesis [H composición prosa + callout lateral del sitio origen] */
+.cs-hypo-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: start;
+  margin-top: 40px;
+}
 .cs-hypothesis {
-  background: var(--bg2);
-  border-radius: var(--radius-sm);
-  padding: 32px;
-  margin-top: 32px;
+  border-left: 3px solid var(--accent);
+  padding-left: clamp(20px, 3vw, 36px);
 }
 .cs-hypothesis-label {
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 16px;
+  color: var(--accent);
+  margin-bottom: 18px;
 }
 .cs-hypothesis-text {
-  font-size: clamp(18px, 2.2vw, 24px);
-  font-weight: 600;
-  line-height: 1.4;
+  font-size: clamp(19px, 2.2vw, 26px);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
   color: var(--fg);
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 .cs-hypothesis-rationale {
   font-size: 15px;
@@ -1718,7 +1724,8 @@ nav.scrolled {
   .cs-findings,
   .cs-quests,
   .cs-result-grid,
-  .cs-next-steps {
+  .cs-next-steps,
+  .cs-hypo-grid {
     grid-template-columns: 1fr;
   }
   .cs-metrics {

@@ -92,7 +92,7 @@ const heroGrad = gradients[d.gradient];
           <div class="cs-section-inner">
             {s.label && <p class="cs-section-label rv">{s.label}</p>}
             {s.title && <h2 class="cs-section-title rv">{s.title}</h2>}
-            {s.paragraphs && (
+            {s.paragraphs && s.type !== 'hypothesis' && (
               <div class="cs-section-body rv">
                 {s.paragraphs.map((p: string) => (
                   <p set:html={p.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} />
@@ -113,10 +113,19 @@ const heroGrad = gradients[d.gradient];
             )}
 
             {s.type === 'hypothesis' && (
-              <div class="cs-hypothesis rv">
-                <p class="cs-hypothesis-label">Hypothesis</p>
-                <p class="cs-hypothesis-text">{s.statement}</p>
-                <p class="cs-hypothesis-rationale">{s.rationale}</p>
+              <div class="cs-hypo-grid rv">
+                {s.paragraphs && (
+                  <div class="cs-section-body">
+                    {s.paragraphs.map((p: string) => (
+                      <p set:html={p.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} />
+                    ))}
+                  </div>
+                )}
+                <aside class="cs-hypothesis">
+                  <p class="cs-hypothesis-label">The hypothesis</p>
+                  <p class="cs-hypothesis-text">{s.statement}</p>
+                  <p class="cs-hypothesis-rationale">{s.rationale}</p>
+                </aside>
               </div>
             )}
 

@@ -63,6 +63,11 @@ sections:
         text: 'The quest could never block the app. That made the entry point the highest-risk design decision of the project.'
   - type: hypothesis
     label: 'Hypothesis'
+    title: 'Turning one data point into a bet'
+    paragraphs:
+      - 'The cohort data gave us a line: three redemptions in the first week. But a correlation is not a mechanic — nothing about that number tells you how to get users there, or whether pushing them across the line changes the outcome at all.'
+      - 'So we framed the quest as a falsifiable bet rather than a feature request. If guiding first-week behaviour did not move trial-to-paid conversion, the quest had no reason to exist, no matter how polished it felt in the prototype.'
+      - 'Before committing a sprint to it, we pressure-tested the framing: argued against it with the growth team, listed the ways it could fail, and agreed in advance what result would kill it. DUMMY copy for illustration.'
     statement: 'If new trial users complete a short guided quest that gets them to three redemptions in week one, they will convert to paid at a meaningfully higher rate — without any monetary incentive.'
     rationale: 'Grounded in the redemption-cohort data: three first-week redemptions was the clearest behavioural line between users who stayed and users who churned. DUMMY rationale for illustration.'
   - type: quests
