@@ -42,12 +42,12 @@ Fuentes citadas:
 
 | Uso | Valor | Fuente |
 |---|---|---|
-| Display (logo, hero, títulos de sección, nº de caso) | **Syne** 700/800 | `[G]`, `[H] .hero-title, .s-title, .nav-logo` |
-| Cuerpo, UI, títulos de caso y métricas | **Inter** 300/400/600 (+700/800 en headings/valores) | `[G]`, `[H] body, .pname, .pm-val`, `[C] .cs-title` |
+| Display (logo, hero, títulos de sección, nº de caso) | **Roc Grotesk Wide** 700 (Adobe Fonts, `roc-grotesk-wide`; fallback: Syne 700 vía Google) | `[G]`, `[H] .hero-title, .s-title, .nav-logo` |
+| Cuerpo, UI, títulos de caso y métricas | **Neue Haas Unica** 300/400/600 (+700/800 en headings/valores) (Adobe Fonts, `neue-haas-unica`; fallback: Inter vía Google) | `[G]`, `[H] body, .pname, .pm-val`, `[C] .cs-title` |
 | Hero title | `clamp(72px,12vw,176px)` · 800 · lh 0.88 · ls −0.05em | `[H] .hero-title` |
 | Section title | `clamp(52px,8vw,110px)` · 800 · lh 0.88 · ls −0.045em | `[H] .s-title` |
-| Título de caso (hero) | Inter `clamp(52px,9vw,130px)` · 800 · lh 0.9 · ls −0.045em | `[C] .cs-title` |
-| Título de sección de caso | Inter `clamp(32px,4.5vw,60px)` · 800 · lh 1.05 · ls −0.035em | `[C] .cs-section-title` |
+| Título de caso (hero) | Neue Haas Unica `clamp(52px,9vw,130px)` · 800 · lh 0.9 · ls −0.045em | `[C] .cs-title` |
+| Título de sección de caso | Neue Haas Unica `clamp(32px,4.5vw,60px)` · 800 · lh 1.05 · ls −0.035em | `[C] .cs-section-title` |
 | Párrafo de caso | 17px · 300 · lh 1.7 | `[C] .cs-section-body p` |
 | Labels/eyebrows | 9–12px · uppercase · ls 0.08–0.18em · `--muted` | `[H] .s-label, .hero-eyebrow`, `[C] .cs-section-label` |
 | Descripción hero | 15px · 300 · lh 1.65 · máx 360px | `[H] .hero-desc` |
@@ -93,18 +93,18 @@ Comportamiento copiado literal de `[H] nav / nav.scrolled`:
 
 | Componente | Composición (todo con tokens de arriba) | Fuente |
 |---|---|---|
-| **Nav** | logo Syne 15px/800 + links 12px uppercase con subrayado animado + botón tema pill | `[H] nav`, S1/S2/S4 |
+| **Nav** | logo Roc Grotesk Wide 15px/700 + links 12px uppercase con subrayado animado + botón tema pill | `[H] nav`, S1/S2/S4 |
 | **Theme toggle** | pill borde `--border`, 11px uppercase; hover invierte a `--fg`/`--bg` | `[H] .theme-btn` |
-| **Preloader** | nombre Syne clamp + barra de progreso 160×1px | `[H] #preloader` |
+| **Preloader** | nombre Roc Grotesk Wide clamp + barra de progreso 160×1px | `[H] #preloader` |
 | **Hero** | eyebrow + título 2 líneas + descripción 360px + pills derecha + scroll-hint vertical con línea animada | `[H] #hero`, S1 |
 | **Pills de estado** | `available` (verde, dot blink), ubicación, premio | `[H] .pill`, S1 |
-| **Marquee** | franja con bordes, items Syne 11px uppercase separados por ✦ | `[H] .marquee-wrap` |
-| **Section header** | label 10px + título Syne + contador, borde inferior | `[H] .s-header` |
-| **Project card (pcard)** | grid 2 col (info / visual), borde `--radius`, nº + tags pill, empresa + nombre Inter 800, métricas, visual con gradiente 145deg + blobs + flecha circular 44px | `[H] .pcard*`, S2 |
+| **Marquee** | franja con bordes, items Roc Grotesk Wide 11px uppercase separados por ✦ | `[H] .marquee-wrap` |
+| **Section header** | label 10px + título Roc Grotesk Wide + contador, borde inferior | `[H] .s-header` |
+| **Project card (pcard)** | grid 2 col (info / visual), borde `--radius`, nº + tags pill, empresa + nombre Neue Haas Unica 800, métricas, visual con gradiente 145deg + blobs + flecha circular 44px | `[H] .pcard*`, S2 |
 | **WIP badge** | pill ámbar con dot blink | `[H] .wip-badge`, S2/S3 |
 | **About** | grid 1.1fr/0.9fr, bio 300 con `em` en acento, listas experiencia/premios con borde inferior, skill pills | `[H] #about` |
-| **Contact** | headline Syne gigante con link subrayado 4px acento, footer email + social links | `[H] #contact` |
-| **Case hero** | full-height, cover oscurecida, nº outline gigante (`-webkit-text-stroke`), título Inter, meta-strip 4 celdas | `[C] .cs-hero*` |
+| **Contact** | headline Roc Grotesk Wide gigante con link subrayado 4px acento, footer email + social links | `[H] #contact` |
+| **Case hero** | full-height, cover oscurecida, nº outline gigante (`-webkit-text-stroke`), título Neue Haas Unica, meta-strip 4 celdas | `[C] .cs-hero*` |
 | **Summary band** | TL;DR 19px + stats acento 34px | `[C] .cs-summary*` |
 | **Case sections** | label + título + body 640px; two-col; findings grid; steps list; quest cards con XP pill; chart de barras; quote borde-izq acento; metrics band; result cards; hypothesis; stakeholders; impl-steps; lessons; next-steps | `[C]`, S3 |
 | **Next project footer** | banda `--bg2` con nombre gigante + flecha circular 64px; variante WIP | `[C] .cs-next`, S3 |

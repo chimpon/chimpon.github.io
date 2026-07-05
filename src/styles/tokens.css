@@ -29,9 +29,11 @@
   --ease-nav:      cubic-bezier(0.4, 0, 0.2, 1);      /* nav flat→cápsula [H:nav] */
   --ease-load:     cubic-bezier(0.76, 0, 0.24, 1);    /* barra preloader [H:.pl-bar] */
 
-  /* ---- Tipografía [H fonts.googleapis: Syne 700/800; Inter 300/400/600(+800 usado)] ---- */
-  --font-display:  'Syne', sans-serif;
-  --font-body:     'Inter', system-ui, sans-serif;
+  /* ---- Tipografía [Adobe Fonts (use.typekit.net/hjw4tpn.css): roc-grotesk-wide 700 display
+          + neue-haas-unica 300/400/600/700/800 body. Syne 700 e Inter (Google) se mantienen
+          como fallback por si el kit de Adobe deja de servir] ---- */
+  --font-display:  'roc-grotesk-wide', 'Syne', sans-serif;
+  --font-body:     'neue-haas-unica', 'Inter', system-ui, sans-serif;
 
   /* ---- Sombras [H:nav.scrolled] ---- */
   --shadow-nav:    0 4px 24px rgba(0, 0, 0, 0.25);
@@ -100,7 +102,7 @@
      pname            clamp(22px, 2.8vw, 40px)   [H:.pname]
 
    Fijos (px): 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 22, 30, 34
-   Pesos: Syne 700/800 · Inter 300/400/600/700/800
+   Pesos: roc-grotesk-wide 700 · neue-haas-unica 300/400/600/700/800
    Tracking: -0.05em títulos display · +0.08–0.18em labels uppercase
    Line-height: 0.88–0.9 display · 1.05–1.08 títulos · 1.5–1.7 texto
 
