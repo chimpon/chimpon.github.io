@@ -88,49 +88,8 @@ body::after {
 .cursor-arrow svg {
   display: block;
 }
-.cursor-label {
-  position: absolute;
-  top: 18px;
-  left: 16px;
-  background: #1a1a19;
-  color: #edede8;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 4px 10px 4px 8px;
-  border-radius: var(--radius-pill);
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.07);
-  transition: background 0.25s ease, transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.cursor-label-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #ff3d00;
-  flex-shrink: 0;
-}
-@keyframes pill-bounce {
-  0% { transform: scale(1, 1); }
-  18% { transform: scale(1.14, 0.86); }
-  38% { transform: scale(0.93, 1.07); }
-  58% { transform: scale(1.05, 0.96); }
-  78% { transform: scale(0.98, 1.02); }
-  100% { transform: scale(1, 1); }
-}
 body.is-hovering .cursor-arrow {
   transform: rotate(-12deg) scale(0.92);
-}
-body.is-hovering .cursor-label {
-  background: #ff3d00;
-  color: #fff;
-  animation: pill-bounce 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97);
-}
-body.is-hovering .cursor-label-dot {
-  background: rgba(255, 255, 255, 0.6);
 }
 
 /* ---------- Preloader [H #preloader] ---------- */
